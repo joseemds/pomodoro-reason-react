@@ -1,7 +1,20 @@
 type state = {
-  second: int,
+  seconds: int,
   isTicking: bool,
 };
 
-[@react.component]
-let make = () => <div> {React.string("hello world")} </div>;
+type action =
+  | Start
+  | Stop
+  | Reset
+  | Tick;
+
+let initialState = {seconds: 30, isTicking: true};
+
+let reducer = (state, action) =>
+  switch (action) {
+  | Start => {...state, isTicking: true}
+  | Stop => {...state, isTicking: false}
+  | Reset => {...state, seconds: 30}
+  | Tick => {...state, seconds: state.seconds - 1}
+  };
